@@ -7,6 +7,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//#region Login
+
+//#endregion
+
 //#region Course
 router.get('/course',CourseController.ListCourse)
 router.get('/detail',CourseController.DetailCourse)
