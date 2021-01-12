@@ -17,33 +17,131 @@ const Offset = process.env.OFFSET
 const ListCourse = function(req,res,next){
     var course = req.query.ConfigCourseTypeId;
     var page = req.query.Page || 1;
+
+    //--- Sorting
+    var isSorting = false;
+    var rateSorting = req.query.RateSorting;
+    var priceSorting = req.query.PriceSorting;
+    var viewSorting = req.query.ViewSorting;
+    console.log(rateSorting)
+    console.log(priceSorting)
+    console.log(viewSorting)
+    //--- Connect SQL
     var connection = mysql.createConnection(connectionString)
     connection.connect()
     var listAll = [] ; var lenAll = 0 ; var PagesAll = 0
     var listWebsite = [];var lenWebsite = 0; var pagesWebsite = 0
     var listMobile = []; var lenMobile = 0; var pagesMobile = 0
     if (course === undefined){
-        connection.query('Select * from ConfigCourse where IsDeleted = ? order by Id desc',[0],function(err,results,fields){
-            if (err) throw err;
-            lenAll = results.length
-            pagesAll = CreatePageArray(lenAll%Offset == 0 ? Math.floor(lenAll/Offset) : Math.floor(lenAll/Offset) + 1)
-            if (page !== undefined){
-                for (let index = (page -1)*Offset; index < page*Offset; index++) {
-                    if (index === lenAll){
-                        break;
+        if (priceSorting !== '' && priceSorting !== undefined){
+            isSorting = true;
+            connection.query('Select * from ConfigCourse where IsDeleted = ? order by Price '+ priceSorting,[0],function(err,results,fields){
+                if (err) throw err;
+                lenAll = results.length
+                pagesAll = CreatePageArray(lenAll%Offset == 0 ? Math.floor(lenAll/Offset) : Math.floor(lenAll/Offset) + 1)
+                if (page !== undefined){
+                    for (let index = (page -1)*Offset; index < page*Offset; index++) {
+                        if (index === lenAll){
+                            break;
+                        }
+                        listAll.push(results[index]);
                     }
-                    listAll.push(results[index]);
                 }
-            }
-            else{
-                listAll = results;
-            }
-            res.render('./course/course',{
-                title:'Khóa học',
-                ListAll:listAll,
-                PagesAll:pagesAll,
+                else{
+                    listAll = results;
+                }
+                res.render('./course/course',{
+                    title:'Khóa học',
+                    ListAll:listAll,
+                    PagesAll:pagesAll,
+                    IsSorting : isSorting,
+                    PriceSorting : priceSorting,
+                    RateSorting : rateSorting,
+                    ViewSorting : viewSorting,
+                })
             })
-        })
+        }
+        else if (rateSorting !== '' && rateSorting !== undefined){
+            isSorting = true;
+            connection.query('Select * from ConfigCourse where IsDeleted = ? order by Rating '+ rateSorting,[0],function(err,results,fields){
+                if (err) throw err;
+                lenAll = results.length
+                pagesAll = CreatePageArray(lenAll%Offset == 0 ? Math.floor(lenAll/Offset) : Math.floor(lenAll/Offset) + 1)
+                if (page !== undefined){
+                    for (let index = (page -1)*Offset; index < page*Offset; index++) {
+                        if (index === lenAll){
+                            break;
+                        }
+                        listAll.push(results[index]);
+                    }
+                }
+                else{
+                    listAll = results;
+                }
+                res.render('./course/course',{
+                    title:'Khóa học',
+                    ListAll:listAll,
+                    PagesAll:pagesAll,
+                    IsSorting : isSorting,
+                    PriceSorting : priceSorting,
+                    RateSorting : rateSorting,
+                    ViewSorting : viewSorting,
+                })
+            })
+        }
+        else if (viewSorting !== '' && viewSorting !== undefined){
+            isSorting = true;
+            connection.query('Select * from ConfigCourse where IsDeleted = ? order by Views '+ viewSorting,[0],function(err,results,fields){
+                if (err) throw err;
+                lenAll = results.length
+                pagesAll = CreatePageArray(lenAll%Offset == 0 ? Math.floor(lenAll/Offset) : Math.floor(lenAll/Offset) + 1)
+                if (page !== undefined){
+                    for (let index = (page -1)*Offset; index < page*Offset; index++) {
+                        if (index === lenAll){
+                            break;
+                        }
+                        listAll.push(results[index]);
+                    }
+                }
+                else{
+                    listAll = results;
+                }
+                res.render('./course/course',{
+                    title:'Khóa học',
+                    ListAll:listAll,
+                    PagesAll:pagesAll,
+                    IsSorting : isSorting,
+                    PriceSorting : priceSorting,
+                    RateSorting : rateSorting,
+                    ViewSorting : viewSorting,
+                })
+            })
+        }
+        else{
+            connection.query('Select * from ConfigCourse where IsDeleted = ? order by Id desc',[0],function(err,results,fields){
+                if (err) throw err;
+                lenAll = results.length
+                pagesAll = CreatePageArray(lenAll%Offset == 0 ? Math.floor(lenAll/Offset) : Math.floor(lenAll/Offset) + 1)
+                if (page !== undefined){
+                    for (let index = (page -1)*Offset; index < page*Offset; index++) {
+                        if (index === lenAll){
+                            break;
+                        }
+                        listAll.push(results[index]);
+                    }
+                }
+                else{
+                    listAll = results;
+                }
+                res.render('./course/course',{
+                    title:'Khóa học',
+                    ListAll:listAll,
+                    PagesAll:pagesAll,
+                    IsSorting : isSorting,
+                })
+            })
+        }
+
     }
     else{
         var isFilter = true
@@ -97,6 +195,10 @@ const DetailCourse =  function(req,res,next){
             var isFull = data.CurrentStudents===data.MaxStudents ? true : false
             connection = mysql.createConnection(connectionString)
             connection.connect()
+            connection.query('Update ConfigCourse set Views = ? where Id = ?',[data.Views+1 , data.ID],function(err,results,fields){
+                if (err) throw err
+                console.log('Updated Views')
+            })
             connection.query('Select * from ConfigCourseType where Id = ? and IsDeleted = ?',[data.ConfigCourseTypeId,0],function(err,results,fields){
                 if (err) throw err;
                 console.log(results)

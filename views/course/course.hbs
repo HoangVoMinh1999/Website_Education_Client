@@ -19,27 +19,30 @@
             <div class="col-xl-12">
                 <nav class="navbar navbar-light bg-light">
                     <div class="container-fluid">
-                        <a class="navbar-brand" >
-                            <select class="w-100" name="Rating" id="">
-                                <option value="">5 Sao</option>
-                                <option value="">4.5 Sao</option>
-                                <option value="">4 Sao</option>
-                                <option value="">3.5 Sao</option>
-                                <option value="">3 Sao</option>
-                                <option value="">2.5 Sao</option>
-                                <option value="">2 Sao</option>
-                                <option value="">1.5 Sao</option>
-                                <option value="">1 Sao</option>
-                                <option value="">0.5 Sao</option>
-                                <option value="">0 Sao</option>
-                            </select>
-                        </a>
-                        <a class="navbar-brand">
-                            <select name="" id="">
-                                <option value="">Hello
-                                </option>
-                            </select>
-                        </a>
+                        <form action="/course">
+                            <a class="navbar-brand">
+                                <select name="PriceSorting" id="">
+                                    <option value="">Sắp xếp theo giá</option>
+                                    <option value="ASC">Giá tăng dần</option>
+                                    <option value="DESC">Giá giảm dần</option>
+                                </select>
+                            </a>
+                            <a class="navbar-brand">
+                                <select name="RateSorting" id="">
+                                    <option value="">Sắp xếp theo đánh giá</option>
+                                    <option value="ASC">Đánh giá sao tăng dần</option>
+                                    <option value="DESC">Đánh giá sao giảm dần</option>
+                                </select>
+                            </a>
+                            <a class="navbar-brand">
+                                <select name="ViewSorting" id="">
+                                    <option value="">Sắp xếp theo views</option>
+                                    <option value="ASC">Lượt views tăng dần</option>
+                                    <option value="DESC">Lượt views giảm dần</option>
+                                </select>
+                            </a>
+                            <button type="submit">Áp dụng</button>
+                        </form>
                         <form class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
@@ -82,6 +85,11 @@
                         <form action="/course">
                             {{#if IsFilter}}
                             <input type="text" name="ConfigCourseTypeId" value="{{CourseType}}" hidden>
+                            {{/if}}
+                            {{#if IsSorting}}
+                            <input type="text" name="PriceSorting" value="{{PriceSorting}}" hidden>
+                            <input type="text" name="RateSorting" value="{{RateSorting}}" hidden>
+                            <input type="text" name="ViewSorting" value="ViewSorting" hidden>
                             {{/if}}
                             <nav class="d-flex justify-content-center" aria-label="...">
                                 <ul class="pagination pagination-lg">
