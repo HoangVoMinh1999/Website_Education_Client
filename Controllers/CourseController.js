@@ -59,19 +59,33 @@ const ListCourse = async function(req,res,next) {
     let pagesAll = []
 
     let courseTypeId = req.query.ConfigCourseTypeId;
+    let page = req.query.Page || 1
+    console.log(page)
     if (courseTypeId === undefined){
         listData = await CourseService.all();
         if (listData !== null && listData.length > 0){
             let lenAll = listData.length
             pagesAll = CreatePageArray(lenAll%Offset == 0 ? Math.floor(lenAll/Offset) : Math.floor(lenAll/Offset) + 1)
+            if (page*Offset-1 < listData.length){
+                listData = listData.slice((page-1)*Offset,page*Offset)
+            }
+            else {
+                listData = listData.slice((page-1)*Offset,listData.length)
+            }
         }
     }
     else{
         listData = await  CourseService.getCourseByCourseTypeId(courseTypeId);
-        if (listData !== null && listData.length > 0){
+        if (listData !== null && listData.length  > 0){
             IsFilter = true;
             let lenAll = listData.length
             pagesAll = CreatePageArray(lenAll%Offset == 0 ? Math.floor(lenAll/Offset) : Math.floor(lenAll/Offset) + 1)
+            if (page*Offset-1 < listData.length){
+                listData = listData.slice((page-1)*Offset,page*Offset)
+            }
+            else {
+                listData = listData.slice((page-1)*Offset,listData.length)
+            }
         }
     }
     res.render('./course/course',{
