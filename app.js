@@ -7,6 +7,7 @@ var logger = require('morgan');
 var hbs = require('express-handlebars')
 var bcryptjs = require('bcryptjs')
 var hbs_loop = require('handlebars-loop')
+const hbs_sections = require("express-handlebars-sections");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -14,7 +15,12 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.engine('hbs',hbs({extname:'hbs',defaultLayout:'Default_Layout',layoutDir:__dirname+'/views/layouts/',    runtimeOptions: {allowProtoPropertiesByDefault: true, allowProtoMethodsByDefault: true}}))
+app.engine('hbs',hbs(
+  {extname:'hbs',
+  defaultLayout:'Default_Layout',
+  layoutDir:__dirname+'/views/layouts/',  
+  helpers: {section: hbs_sections()
+  }}))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static('public'))

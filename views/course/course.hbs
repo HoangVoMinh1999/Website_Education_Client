@@ -20,6 +20,9 @@
                 <nav class="navbar navbar-light bg-light">
                     <div class="container-fluid">
                         <form action="/course">
+                            {{#if IsFilter}}
+                                <input type="text" name="ConfigCourseTypeId" value="{{CourseType}}" hidden>
+                            {{/if}}
                             <a class="navbar-brand">
                                 <select name="PriceSorting" id="">
                                     <option value="">Sắp xếp theo giá</option>

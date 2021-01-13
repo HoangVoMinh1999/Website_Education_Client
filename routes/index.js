@@ -3,9 +3,7 @@ var router = express.Router();
 const CourseController = require('../Controllers/CourseController')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', CourseController.ListCourse4Index);
 
 //#region Login
 
