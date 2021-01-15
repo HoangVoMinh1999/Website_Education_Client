@@ -11,10 +11,10 @@ module.exports = {
         db.load(`select Id from ${TBL_COURSETYPE} where IsDeleted = 0 and Name = '${Type}'`),
     //#endregion
     //#region ConfigCourse
-  all: () => db.load(`select * from ${TBL_COURSE} where IsDeleted = 0`),
+  all: (option) => db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 ${option}`),
 
-  getCourseByCourseTypeId : (courseTypeId) =>
-    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and ConfigCourseTypeId = '${courseTypeId}'`),
+  getCourseByCourseTypeId : (courseTypeId, option) =>
+    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and ConfigCourseTypeId = '${courseTypeId}' ${option}`),
 
   single: async (id) => {
     const rows = await db.load(

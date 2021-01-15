@@ -9,35 +9,32 @@ const ListCourse4Index = async function(req,res,next){
     let listMobile = []
     let listWebsite = []
 
-    listAll = await CourseService.all()
+    listAll = await CourseService.all('')
     if (listAll !== null && listAll.length > 3){
         listAll = listAll.slice(0,3)
     }    
     let mobileCourseId = await CourseService.getCourseTypeId(process.env.MOBILE)
     if (mobileCourseId !== null && mobileCourseId !== undefined){
         mobileCourseId = mobileCourseId[0].Id
-        console.log(mobileCourseId)
-        listMobile = await CourseService.getCourseByCourseTypeId(mobileCourseId);
+        listMobile = await CourseService.getCourseByCourseTypeId(mobileCourseId,'');
         if (listMobile !== null && listMobile.length > 3){
             listMobile = listMobile.slice(0,3)
         }
-        console.log(listMobile)
     }
     let websiteCourseId = await CourseService.getCourseTypeId(process.env.WEBSITE)
     if (websiteCourseId !== null && websiteCourseId !== undefined){
         websiteCourseId = websiteCourseId[0].Id;
-        listWebsite = await CourseService.getCourseByCourseTypeId(websiteCourseId);
+        listWebsite = await CourseService.getCourseByCourseTypeId(websiteCourseId,'');
         if (listWebsite !== null && listWebsite.length > 3){
             listWebsite = listWebsite.slice(0,3)
         }
-        console.log(listWebsite)
     }
 
     let mostViewedCourses  = CourseService.get10MostViewedCourses()
     let latestCourses = CourseService.get10LatestCourses()
 
     res.render('./index',{
-        title: 'Trang chu',
+        title: 'Trang chủ',
         ListAll : listAll,
         ListWebsite : listWebsite,
         ListMobile : listMobile,
@@ -54,15 +51,34 @@ function CreatePageArray(page){
     return data
 }
 const ListCourse = async function(req,res,next) {
-    let listData = []
-    let IsFilter = false
-    let pagesAll = []
+    let listData = [];
+    let IsFilter = false;
+    let IsSorting = false;
+    let option = '';
+    let courseType = '';
+    let pagesAll = [];
 
     let courseTypeId = req.query.ConfigCourseTypeId;
     let page = req.query.Page || 1
-    console.log(page)
+
+    let priceSorting = req.query.PriceSorting;
+    let rateSorting = req.query.RateSorting;
+    let viewSorting = req.query.ViewSorting;
+    if (priceSorting !== undefined){
+        IsSorting = true;
+        option = 'Order by Price '+priceSorting
+    }
+    else if (rateSorting !== undefined){
+        IsSorting = true;
+        option = 'Order by Rate '+ rateSorting
+    }
+    else if (viewSorting !== undefined){
+        IsSorting = true;
+        option = 'Order by View '+ viewSorting
+    }
+
     if (courseTypeId === undefined){
-        listData = await CourseService.all();
+        listData = await CourseService.all(option);
         if (listData !== null && listData.length > 0){
             let lenAll = listData.length
             pagesAll = CreatePageArray(lenAll%Offset == 0 ? Math.floor(lenAll/Offset) : Math.floor(lenAll/Offset) + 1)
@@ -75,9 +91,10 @@ const ListCourse = async function(req,res,next) {
         }
     }
     else{
-        listData = await  CourseService.getCourseByCourseTypeId(courseTypeId);
+        listData = await  CourseService.getCourseByCourseTypeId(courseTypeId,option);
         if (listData !== null && listData.length  > 0){
             IsFilter = true;
+            courseType = courseTypeId
             let lenAll = listData.length
             pagesAll = CreatePageArray(lenAll%Offset == 0 ? Math.floor(lenAll/Offset) : Math.floor(lenAll/Offset) + 1)
             if (page*Offset-1 < listData.length){
@@ -93,6 +110,11 @@ const ListCourse = async function(req,res,next) {
         ListAll : listData,
         PagesAll : pagesAll,
         IsFilter : IsFilter,
+        CourseType : courseType,
+        IsSorting : IsSorting,
+        PriceSorting : priceSorting,
+        RateSorting : rateSorting,
+        ViewSorting : viewSorting,
     })
 }
 

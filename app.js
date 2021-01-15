@@ -8,6 +8,7 @@ var hbs = require('express-handlebars')
 var bcryptjs = require('bcryptjs')
 var hbs_loop = require('handlebars-loop')
 const hbs_sections = require("express-handlebars-sections");
+const session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -24,6 +25,25 @@ app.engine('hbs',hbs(
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static('public'))
+
+//--- Config Session
+app.set('trust proxy', 1);
+app.use(session({
+  secret: 'SECRET_KEY',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+   // secure: true
+  }
+}));
+
+app.use(async function(req,res,next){
+  if (req.session.IsAuth === true){
+    res.locals.IsAuth = req.session.IsAuth;
+    res.locals.Account = req.session.Account;
+  }
+  next()
+})
 
 app.use(logger('dev'));
 app.use(express.json());
