@@ -127,9 +127,9 @@ const DetailCourse = async function(req,res,next){
     let user = 'Default';
     let isJoin = false;
     let isFull = false;
+    let isFavorite = false;
     let rates = [];
     let detailCourse = await CourseService.single(Id)
-    console.log(detailCourse)
     if (detailCourse !== null){
         var update = await CourseService.updateViews(detailCourse.ID,detailCourse.Views + 1)
         if (detailCourse.UserId !== null){
@@ -142,15 +142,17 @@ const DetailCourse = async function(req,res,next){
     }
     if (req.session.Account !== null && req.session.Account !== undefined){
         isJoin = await CourseDetailService.checkJoin(req.session.Account.ID,detailCourse.ID)  
+        isFavorite = await CourseDetailService.checkFavorite(req.session.Account.ID,detailCourse.ID)  
     }
-    console.log(isJoin)
+    console.log(isFavorite)
     res.render('./course/detailCourse',{
         title:'Chi tiết khóa học',
         data : detailCourse,
         User : user,
         IsJoin : isJoin,
         IsFull : isFull,
-        Rates : rates
+        Rates : rates,
+        IsFavorite : isFavorite,
     })
 }
 

@@ -101,6 +101,15 @@
                     {{/if}}
 
                     {{/if}}
+                    {{#if IsFavorite}}
+                    <form action="/remove-wishlist" method="POST">
+                        <button class="boxed_btn" type="submit" name="courseId" value="{{data.ID}}">Hủy yêu thích</button>
+                    </form>
+                    {{else}}
+                    <form action="/add-wishlist" method="POST">
+                        <button class="boxed_btn" type="submit" name="courseId" value="{{data.ID}}">Yêu thích</button>
+                    </form>
+                    {{/if}}
                     <div class="feedback_info">
                         <h3>Write your feedback</h3>
                         <p>Your rating</p>
