@@ -32,9 +32,10 @@ const ListCourse4Index = async function(req,res,next){
         }
     }
 
-    let mostViewedCourses  = CourseService.get12MostViewedCourses()
-    let latestCourses = CourseService.get12LatestCourses()
-
+    let mostViewedCourses  = await CourseService.get12MostViewedCourses()
+    console.log(mostViewedCourses.length)
+    let latestCourses = await CourseService.get12LatestCourses()
+    console.log(latestCourses.length)
     res.render('./index',{
         title: 'Trang chủ',
         ListAll : listAll,

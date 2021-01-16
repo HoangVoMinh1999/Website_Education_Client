@@ -33,12 +33,14 @@ module.exports = {
     
   // Get 10 latest coures
   get12LatestCourses: () =>
-    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and Status='Active'  order by ID desc limit 10`),
+    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and Status='Active'  order by ID desc limit 12`),
 
   // Get 10 most viewed courses
   get12MostViewedCourses: () =>
-    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and Status='Active' order by views limit 10`),
+    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and Status='Active' order by views desc limit 12`),
 
+  get12MostStudentCourses: () =>
+    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and Status='Active' order by CurrentStudents desc limit 12`),
   // Get quantity by category
   getQuantityByCategory: async (id) => {
     const rows = await db.load(
