@@ -79,8 +79,13 @@ const Login = async function (req,res,next){
         res.render('login',{title:'Đăng nhập',layout:'loginLayout', Message : sMessage})
     }
 }
-
+const Logout = function(req,res,next){
+    req.session.IsAuth = false;
+    req.session.Account = null;
+    res.redirect('/')
+}
 module.exports = {
     Register,
     Login,
+    Logout
 }

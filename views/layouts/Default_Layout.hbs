@@ -60,12 +60,6 @@
                                         {{#if IsAuth}}
                                         <li><a href="/logout">Logout</a></li>
                                         <li><a href="about.html">About</a></li>
-                                        <li><a href="#">blog <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                <li><a href="blog.html">blog</a></li>
-                                                <li><a href="single-blog.html">single-blog</a></li>
-                                            </ul>
-                                        </li>
                                         {{else}}
                                         <script>
                                             console.log(session.IsAuth)
@@ -77,7 +71,20 @@
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-3 d-none d-lg-block">
-                            <div class="log_chat_area d-flex align-items-center">
+                            <div class=" log_chat_area d-flex align-items-center">
+                                {{#if IsAuth}}
+                                <div class="dropdown">
+                                    <a class="login dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        {{Account.Username}}
+                                        </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Thông tin cá nhân</a>
+                                        <a class="dropdown-item" href="/logout">Đăng xuất</a>
+                                    </div>
+                                </div>
+                                {{/if}}
                                 <div class="live_chat_btn">
                                     <a class="boxed_btn_orange" href="#">
                                         <i class="fa fa-phone"></i>

@@ -30,6 +30,9 @@ router.post('/register',UserController.Register)
 router.get('/Logout',)
 //#endregion
 
+//#region Logout
+router.get('/logout',UserController.Logout);
+//#endregion
 //#region Course
 router.get('/course',CourseController.ListCourse)
 router.get('/detail',CourseController.DetailCourse)
