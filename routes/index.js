@@ -44,5 +44,7 @@ router.get('/detail',CourseController.DetailCourse)
 router.post('/join-course',CourseDetailController.JoinCourse)
 
 router.post('/cancel-course',CourseDetailController.CancelCourse)
+
+router.post ('/comment', CourseDetailController.AddComment)
 //#endregion
 module.exports = router;

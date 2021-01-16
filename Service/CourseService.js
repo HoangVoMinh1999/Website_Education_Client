@@ -11,10 +11,10 @@ module.exports = {
         db.load(`select Id from ${TBL_COURSETYPE} where IsDeleted = 0 and Name = '${Type}'`),
     //#endregion
     //#region ConfigCourse
-  all: (option) => db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 ${option}`),
+  all: (option) => db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and Status='Active' ${option}`),
 
   getCourseByCourseTypeId : (courseTypeId, option) =>
-    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and ConfigCourseTypeId = '${courseTypeId}' ${option}`),
+    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and Status='Active' and ConfigCourseTypeId = '${courseTypeId}' ${option}`),
 
   single: async (id) => {
     const rows = await db.load(
@@ -32,17 +32,17 @@ module.exports = {
     db.patch(`Update ${TBL_COURSE} set CurrentStudents = '${student}' where Id = '${id}'`),
     
   // Get 10 latest coures
-  get10LatestCourses: () =>
-    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 order by ID desc limit 10`),
+  get12LatestCourses: () =>
+    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and Status='Active'  order by ID desc limit 10`),
 
   // Get 10 most viewed courses
-  get10MostViewedCourses: () =>
-    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 order by views limit 10`),
+  get12MostViewedCourses: () =>
+    db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and Status='Active' order by views limit 10`),
 
   // Get quantity by category
   getQuantityByCategory: async (id) => {
     const rows = await db.load(
-      `select * from ${TBL_COURSE} where IsDeleted = 0 and ConfigCourseTypeId = ${id}`
+      `select * from ${TBL_COURSE} where IsDeleted = 0 and Status='Active' and ConfigCourseTypeId = ${id}`
     );
     if (rows.length == null) return null;
     return rows;

@@ -1,7 +1,18 @@
 const db = require("../util/util");
 const TBL_COURSEDETAIL = "CourseDetail";
+const TBL_RATE = "Rate";
 
 module.exports = {
+//#region Rate
+allRateByCourseID : (id) => {
+  return db.load(`select * from ${TBL_RATE} where IsDeleted = 0 and CourseId = ${id}`);
+},
+addRate : (entity) => {
+  return db.add(entity, TBL_RATE);
+},
+//#endregion
+
+//#region Course Detail
   all : () => {
     return db.load(`select * from ${TBL_COURSEDETAIL}`);
   },
@@ -21,4 +32,5 @@ module.exports = {
   add : (entity) => {
     return db.add(entity, TBL_COURSEDETAIL);
   },
+//#endregion
 };

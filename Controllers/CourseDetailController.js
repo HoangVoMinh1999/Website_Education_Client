@@ -32,6 +32,7 @@ const JoinCourse =async  function(req,res,next){
 
 const CancelCourse =async function(req,res,next){
     let courseId = req.body.courseId
+    console.log(courseId)
     let user = req.session.Account
     if (user !== undefined){
         if (courseId !== null && user !== null){
@@ -49,7 +50,20 @@ const CancelCourse =async function(req,res,next){
     }
 }
 
+const AddComment = async function(req,res,next){
+    let courseId = req.body.courseId
+    console.log(courseId)
+    let newItem = {
+        CourseID : req.body.courseId,
+        Rate : req.body.Rate || 5,
+        Comment : req.body.comment,        
+    }
+    await CourseDetailService.addRate(newItem)
+    res.redirect('/detail?ID='+newItem.CourseID)
+}
+
 module.exports = {
     JoinCourse,
     CancelCourse,
+    AddComment,
 }

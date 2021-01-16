@@ -88,7 +88,8 @@
                     {{else}}
                     {{#if IsJoin}}
                     <form action="/cancel-course" method="POST">
-                        <button class="boxed_btn btn-danger" type="submit" name="courseId" value="{{data.ID}}">Hủy khóa học</button>
+                        <button class="boxed_btn btn-danger" type="submit" name="courseId" value="{{data.ID}}">Hủy khóa
+                            học</button>
                     </form>
                     {{else}}
                     <form action="/join-course" method="POST">
@@ -107,12 +108,26 @@
                         <i class="flaticon-mark-as-favorite-star"></i>
                         <i class="flaticon-mark-as-favorite-star"></i>
 
-                        <form action="#">
-                            <textarea name="" id="" cols="30" rows="10" placeholder="Write your feedback"></textarea>
-                            <button type="submit" class="boxed_btn">Submit</button>
+                        <form action="/comment" method="POST">
+                            <textarea name="comment" id="" cols="30" rows="10"
+                                placeholder="Write your feedback"></textarea>
+                            <button type="submit" class="boxed_btn" name="courseId" value="{{data.ID}}">Submit</button>
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <h3>Comments</h3>
+            <div class="col-12">
+                <ul class="list-group list-group-flush">
+                    {{#each Rates}}
+                    <li class="list-group-item">
+                        <p>({{this.Rate}})<i class="flaticon-mark-as-favorite-star"></i></p>
+                        <p>{{this.Comment}}</p>
+                    </li>
+                    {{/each}}
+                </ul>
             </div>
         </div>
     </div>

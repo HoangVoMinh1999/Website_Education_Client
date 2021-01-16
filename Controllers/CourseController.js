@@ -32,8 +32,8 @@ const ListCourse4Index = async function(req,res,next){
         }
     }
 
-    let mostViewedCourses  = CourseService.get10MostViewedCourses()
-    let latestCourses = CourseService.get10LatestCourses()
+    let mostViewedCourses  = CourseService.get12MostViewedCourses()
+    let latestCourses = CourseService.get12LatestCourses()
 
     res.render('./index',{
         title: 'Trang chủ',
@@ -122,10 +122,13 @@ const ListCourse = async function(req,res,next) {
 
 const DetailCourse = async function(req,res,next){
     let Id = req.query.ID;
+    console.log(Id)
     let user = 'Default';
     let isJoin = false;
     let isFull = false;
+    let rates = [];
     let detailCourse = await CourseService.single(Id)
+    console.log(detailCourse)
     if (detailCourse !== null){
         var update = await CourseService.updateViews(detailCourse.ID,detailCourse.Views + 1)
         if (detailCourse.UserId !== null){
@@ -133,7 +136,8 @@ const DetailCourse = async function(req,res,next){
         }
         if (detailCourse.CurrentStudents === detailCourse.MaxStudents){
             isFull = true
-        }      
+        }
+        rates = await CourseDetailService.allRateByCourseID(Id)      
     }
     if (req.session.Account !== null && req.session.Account !== undefined){
         isJoin = await CourseDetailService.checkJoin(req.session.Account.ID,detailCourse.ID)  
@@ -145,6 +149,7 @@ const DetailCourse = async function(req,res,next){
         User : user,
         IsJoin : isJoin,
         IsFull : isFull,
+        Rates : rates
     })
 }
 
