@@ -41,7 +41,7 @@ module.exports = {
     const account = await db.load(
       `select * from ${TBL_USERS} where Email='${email}'`
     );
-    if (account !== null){
+    if (account.length > 0){
       return false;
     }
     return true;
