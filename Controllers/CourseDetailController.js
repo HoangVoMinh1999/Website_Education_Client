@@ -108,24 +108,22 @@ const AddComment = async function(req,res,next){
 
 const GetListCourse = async function(req,res,next){
     let ID =req.query.ID
-    console.log(ID)
     let listJoin = await CourseDetailService.getJoinCourses(ID)
-    console.log(listJoin)
     let wishlist = await CourseDetailService.getWishList(ID)
     let dataListJoin = []
     let dataWishList = []
     listJoin.forEach(async t => {
-        let course = await CourseService.single(t)
+        let course = await CourseService.single(t.CourseID)
         dataListJoin.push(course)
     });
     wishlist.forEach(async t => {
-        let course = await CourseService.single(t)
+        let course = await CourseService.single(t.CourseID)
         dataWishList.push(course)
     });
     res.render ('./user/Profile',{
         title:'Thông tin cá nhân',
-        DataListJoin : listJoin,
-        DataWishList : wishlist,
+        DataListJoin : dataListJoin,
+        DataWishList : dataWishList,
     })
 }
 
