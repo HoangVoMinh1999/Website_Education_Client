@@ -42,7 +42,6 @@ app.use(async function(req,res,next){
     res.locals.IsAuth = req.session.IsAuth;
     res.locals.Account = req.session.Account;
   }
-  console.log(res.locals.Account)
   next()
 })
 

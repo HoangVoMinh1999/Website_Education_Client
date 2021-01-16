@@ -30,6 +30,13 @@ module.exports = {
     if (rows.length === 0) return null;
     return rows[0];
   },
+  async singleById(id) {
+    const rows = await db.load(
+      `select * from ${TBL_USERS} where id='${id}'`
+    );
+    if (rows.length === 0) return null;
+    return rows[0];
+  },
   async checkValidEmail(email){
     const account = await db.load(
       `select * from ${TBL_USERS} where Email='${email}'`

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const CourseController = require('../Controllers/CourseController')
 const UserController = require('../Controllers/UserController')
+const CourseDetailController = require('../Controllers/CourseDetailController')
 
 /* GET home page. */
 router.get('/', CourseController.ListCourse4Index);
@@ -36,5 +37,12 @@ router.get('/logout',UserController.Logout);
 //#region Course
 router.get('/course',CourseController.ListCourse)
 router.get('/detail',CourseController.DetailCourse)
+//#endregion
+
+
+//#region Join Course
+router.post('/join-course',CourseDetailController.JoinCourse)
+
+router.post('/cancel-course',CourseDetailController.CancelCourse)
 //#endregion
 module.exports = router;

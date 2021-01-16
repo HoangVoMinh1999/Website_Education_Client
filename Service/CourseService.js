@@ -28,6 +28,9 @@ module.exports = {
   updateViews : (id,view) => 
     db.patch(`Update ${TBL_COURSE} set Views = '${view}' where Id = '${id}'`),
 
+  updateStudents : (id,student) => 
+    db.patch(`Update ${TBL_COURSE} set CurrentStudents = '${student}' where Id = '${id}'`),
+    
   // Get 10 latest coures
   get10LatestCourses: () =>
     db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 order by ID desc limit 10`),

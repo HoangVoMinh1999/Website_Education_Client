@@ -1,6 +1,8 @@
 require('dotenv').config()
 const router = require("../routes")
 const CourseService = require("../Service/CourseService")
+const UserService = require('../Service/UserService')
+const CourseDetailService = require('../Service/CourseDetailService')
 
 const Offset = process.env.OFFSET
 
@@ -119,16 +121,30 @@ const ListCourse = async function(req,res,next) {
 }
 
 const DetailCourse = async function(req,res,next){
-    let Id = req.query.ID
-    console.log(Id)
+    let Id = req.query.ID;
+    let user = 'Default';
+    let isJoin = false;
+    let isFull = false;
     let detailCourse = await CourseService.single(Id)
     if (detailCourse !== null){
         var update = await CourseService.updateViews(detailCourse.ID,detailCourse.Views + 1)
-        console.log(update)
+        if (detailCourse.UserId !== null){
+            user = await UserService.singleById(detailCourse.UserId)
+        }
+        if (detailCourse.CurrentStudents === detailCourse.MaxStudents){
+            isFull = true
+        }      
     }
+    if (req.session.Account !== null && req.session.Account !== undefined){
+        isJoin = await CourseDetailService.checkJoin(req.session.Account.ID,detailCourse.ID)  
+    }
+    console.log(isJoin)
     res.render('./course/detailCourse',{
         title:'Chi tiết khóa học',
         data : detailCourse,
+        User : user,
+        IsJoin : isJoin,
+        IsFull : isFull,
     })
 }
 

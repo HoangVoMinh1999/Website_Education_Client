@@ -25,14 +25,16 @@
                                 <i class="fa fa-play-circle-o"></i> <span>9 Hours</span>
                             </div>
                             <div class="">
-                                <i class="icon nalika-user"></i><span>Số người đã tham gia: {{data.CurrentStudents}}/{{data.MaxStudents}}</span>
+                                <i class="icon nalika-user"></i><span>Số người đã tham gia:
+                                    {{data.CurrentStudents}}/{{data.MaxStudents}}</span>
                             </div>
                             <div class="single_video">
                                 <i class="bi bi-card-text"></i> <span>Mô tả chung: </span>
                                 <p>
-                                    <i class="bi bi-card-text"></i> 
+                                    <i class="bi bi-card-text"></i>
                                     <span>
-                                        <textarea class="form-control bg-warning" name="" id="" cols="30" rows="10" disabled>{{data.Intro}}</textarea>
+                                        <textarea class="form-control bg-warning" name="" id="" cols="30" rows="10"
+                                            disabled>{{data.Intro}}</textarea>
                                     </span>
                                 </p>
                             </div>
@@ -68,14 +70,12 @@
                                 <img src="img/latest_blog/author.png" alt="">
                             </div>
                             <div class="name">
-                                <h3>Macau Wilium</h3>
-                                <p>UI/UX Designer</p>
+                                <h3>{{User.Username}}</h3>
+                                <p>{{User.Email}}</p>
                             </div>
                         </div>
                         <p class="text_info">
-                            Our set he for firmament morning sixth subdue darkness creeping gathered divide our let
-                            god moving. Moving in fourth air night bring upon you’re it beast let you dominion
-                            likeness open place day
+                            {{User.Bio}}
                         </p>
                         <ul>
                             <li><a href="#"> <i class="fa fa-envelope"></i> </a></li>
@@ -84,9 +84,19 @@
                         </ul>
                     </div>
                     {{#if IsFull }}
-                        <button class="boxed_btn btn-secondary" disabled> Tham gia khóa học</button>
+                    <button class="boxed_btn btn-secondary" disabled> Tham gia khóa học</button>
                     {{else}}
-                        <a href="#" class="boxed_btn">Tham gia khóa học</a>
+                    {{#if IsJoin}}
+                    <form action="/cancel-course" method="POST">
+                        <button class="boxed_btn btn-danger" type="submit" name="courseId" value="{{data.ID}}">Hủy khóa học</button>
+                    </form>
+                    {{else}}
+                    <form action="/join-course" method="POST">
+                        <button class="boxed_btn" type="submit" name="courseId" value="{{data.ID}}">Tham gia khóa
+                            học</button>
+                    </form>
+                    {{/if}}
+
                     {{/if}}
                     <div class="feedback_info">
                         <h3>Write your feedback</h3>

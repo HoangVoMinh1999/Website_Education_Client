@@ -65,8 +65,6 @@ const Login = async function (req,res,next){
         if (bcrypt.compareSync(password,account.Password)){
             req.session.IsAuth = true
             req.session.Account = account
-            res.locals.IsAuth = req.session.IsAuth
-            next()
             res.redirect('/')
         }
         else {
