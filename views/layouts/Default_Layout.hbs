@@ -59,7 +59,6 @@
                                         </li>
                                         {{#if IsAuth}}
                                         <li><a href="/logout">Logout</a></li>
-                                        <li><a href="about.html">About</a></li>
                                         {{else}}
                                         <script>
                                             console.log(session.IsAuth)
@@ -80,7 +79,7 @@
                                         {{Account.Username}}
                                         </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Thông tin cá nhân</a>
+                                        <a class="dropdown-item" href="/profile?ID={{Account.ID}}">Thông tin cá nhân</a>
                                         <a class="dropdown-item" href="/logout">Đăng xuất</a>
                                     </div>
                                 </div>

@@ -1,0 +1,123 @@
+<div class="popular_courses">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="course_nav">
+          <nav>
+            <ul class="nav" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                  aria-selected="true">Khóa học yêu thích</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                  aria-controls="profile" aria-selected="false">Khóa học đang tham gia</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="all_courses">
+    <div class="container">
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <div class="row">
+            {{#each DataWishList}}
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="single_courses">
+                <div class="thumb">
+                  <a href="/detail?ID={{this.ID}}">
+                    <img src="img/courses/1.png" alt="">
+                  </a>
+                </div>
+                <div class="courses_info">
+                  <span>Photoshop</span>
+                  <h3><a href="/detail?ID={{this.ID}}">{{this.Name}} <br></a></h3>
+                  <div class="star_prise d-flex justify-content-between">
+                    <div class="star">
+                      <i class="flaticon-mark-as-favorite-star"></i>
+                      <span>{{this.Rate}}</span>
+                    </div>
+                    <div class="prise">
+                      <span class="active_prise">
+                        {{this.Price}} VND
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="row">
+            {{#each DataListJoin}}
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="single_courses">
+                <div class="thumb">
+                  <a href="#">
+                    <img src="img/courses/1.png" alt="">
+                  </a>
+                </div>
+                <div class="courses_info">
+                  <span>Photoshop</span>
+                  <h3><a href="/detail?ID={{this.ID}}">{{this.Name}} <br></a></h3>
+                  <div class="star_prise d-flex justify-content-between">
+                    <div class="star">
+                      <i class="flaticon-mark-as-favorite-star"></i>
+                      <span>{{this.Rate}}</span>
+                    </div>
+                    <div class="prise">
+                      <span class="active_prise">
+                        {{this.Price}} VND
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+          <div class="row">
+            {{#each ListMobile}}
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="single_courses">
+                <div class="thumb">
+                  <a href="#">
+                    <img src="img/courses/1.png" alt="">
+                  </a>
+                </div>
+                <div class="courses_info">
+                  <span>Photoshop</span>
+                  <h3><a href="/detail?ID={{this.ID}}">{{this.Name}} <br></a></h3>
+                  <div class="star_prise d-flex justify-content-between">
+                    <div class="star">
+                      <i class="flaticon-mark-as-favorite-star"></i>
+                      <span>{{this.Rate}}</span>
+                    </div>
+                    <div class="prise">
+                      <span class="active_prise">
+                        {{this.Price}} VND
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

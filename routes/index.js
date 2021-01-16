@@ -46,5 +46,12 @@ router.post('/join-course',CourseDetailController.JoinCourse)
 router.post('/cancel-course',CourseDetailController.CancelCourse)
 
 router.post ('/comment', CourseDetailController.AddComment)
+
+router.post ('/add-wishlist',CourseDetailController.AddToWishList)
+
+router.post('/remove-wishlist',CourseDetailController.RemoveWishList)
+
+
+router.get('/profile',CourseDetailController.GetListCourse)
 //#endregion
 module.exports = router;
